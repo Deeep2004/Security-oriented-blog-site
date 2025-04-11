@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='home_page.css') }}">
+</head>
+<body onload="welcome();">
+    <div id="navBar">
+        <div id="profileSection">
+            <img id="profilePicture" src="{{ url_for('serve_image', filename='default_user.png') }}" alt="Profile Picture">
+            <span id="profileName">{{ username }}</span>
+        </div>
+        <a href="/logout" class="logout">
+            <img src="{{ url_for('serve_image', filename='logout-icon.svg') }}" alt="Logout Icon" class="logout-icon">
+            <span>Sign Out</span>
+        </a>
+        <button class="delete-account-button" onclick="deleteAccount(event)">
+            <img src="{{ url_for('serve_image', filename='delete-icon.png') }}" alt="Delete Account Icon">
+        </button>             
+    </div>
+    <div id="createPostContainer">
+        <textarea id="postMessageInput" placeholder="Enter your message there..." required></textarea>
+        <button id="postButton" onclick="createNewPost()">Post</button>
+    </div>
+    <div id="postsContainer"></div>
+    <script src="{{ url_for('serve_js', filename='functions.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-image: url('/images/background.jpg');
+    background-size: auto;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    color: #000;
+}
+
+#navBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 8px 20px;
+    border: 2px solid #000;
+    box-shadow: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#profileSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#profilePicture {
+    width: 40px;
+    height: 40px;
+    /* square image for pixel style */
+    object-fit: cover;
+    border: 1px solid #000;
+}
+
+#profileName {
+    font-size: 16px;
+    color: #000;
+}
+
+#createPostContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+    border: 2px solid #000;
+    box-shadow: none;
+}
+
+#createPostContainer textarea {
+    width: 95%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+}
+
+#createPostContainer button {
+    margin-top: 12px;
+    width: 200px;
+    border: 1px solid #000;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+}
+
+#createPostContainer button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+#postsContainer {
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-container {
+    background-color: #fff;
+    border: 2px solid #000;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    margin: 4px 0;
+    box-shadow: none;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.post-username {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.post-content {
+    font-size: 16px;
+    color: #000;
+    white-space: pre-line;
+}
+
+.post-timestamp {
+    font-size: 12px;
+    color: #000;
+    margin-top: 10px;
+}
+
+#user {
+    width: 95%;
+    font-size: 14px;
+    color: #000;
+    padding: 10px;
+    margin: 5px 0;
+    align-self: flex-start;
+    border: 1px solid #000;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid #000;
+    background: #fff;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.logout-icon {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+}
+
+.delete-button {
+    display: block; 
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #ff3333;
+}
+
+
+.delete-account-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;  
+    height: 40px; 
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-account-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  
+}
+
+.delete-account-button:hover {
+    background-color: rgba(255, 0, 0, 0.3); 
+    border-radius: 50%;
+}
+
