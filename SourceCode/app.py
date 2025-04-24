@@ -23,7 +23,7 @@ else:
 credential_collection = db["credential"]
 
 # Connect to Redis for rate limiting, check the README for installation instructions
-rate_limiter = redis.Redis(host='localhost', port=6379, db=1, decode_responses=True)
+rate_limiter = redis.Redis(host='redis', port=6379, db=1, decode_responses=True)
 
 RATE_LIMIT = 5  # Max requests
 TIME_WINDOW = 60  # Time window in seconds

@@ -1,0 +1,10 @@
+docker-compose up --build
+
+
+http://localhost:8080
+
+
+
+
+1. docker build -t my-python-app .
+2. docker run -p 8080:8080 my-python-app

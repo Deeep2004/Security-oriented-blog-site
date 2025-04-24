@@ -1,10 +1,25 @@
+# This is a Docker Compose file that sets up a multi-container application with MongoDB, Redis, and a server.
 version: '3'
 services:
   mongo:
     image: mongo:4.2.5
+    container_name: mongo
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:6.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+
   server:
     build: .
     environment:
-      WAIT_HOST: mongo:27017
+      WAIT_HOST: mongo:27017,redis:6379
     ports:
-      - '8080:8080'
+      - "8080:8080"
+    depends_on:
+      - mongo
+      - redis
+
