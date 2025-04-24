@@ -22,41 +22,50 @@ else:
     print('Database not connected')
 credential_collection = db["credential"]
 
-# Connect to Redis for rate limiting, check the README for installation instructions
 rate_limiter = redis.Redis(host='redis', port=6379, db=1, decode_responses=True)
 
-RATE_LIMIT = 5  # Max requests
+RATE_LIMIT = 100  # Max requests
 TIME_WINDOW = 60  # Time window in seconds
-request_counts = {}  # Stores request timestamps
+# request_counts = {}  # Stores request timestamps
+
+
+ENDPOINT_LIMITS = {
+    "/posts": 60,
+    "/login": 10,
+    "/comments": 20,
+} 
 
 def rate_limit(ip, endpoint):
-    """ Check if the IP exceeds the request limit for the given endpoint """
+    """Rate limiter using Redis sorted sets with per-endpoint limits"""
     key = f"rate_limit:{endpoint}:{ip}"
-    requests = rate_limiter.get(key)
-
-    if requests is None:
-        rate_limiter.set(key, 1, ex=TIME_WINDOW)
-        return True
-    elif int(requests) < RATE_LIMIT:
-        rate_limiter.incr(key)
-        return True
-    else:
-        return False
+    now = time.time()
     
+    limit = ENDPOINT_LIMITS.get(endpoint, RATE_LIMIT)
+    rate_limiter.zremrangebyscore(key, 0, now - TIME_WINDOW)
+    current_count = rate_limiter.zcard(key)
 
-def rate_limit2(ip):
-    current_time = time.time()
-    if ip not in request_counts:
-        request_counts[ip] = []
+    if current_count >= limit:
+        return False  
+
+    rate_limiter.zadd(key, {str(now): now})
+    rate_limiter.expire(key, TIME_WINDOW + 5)
+
+    return True 
+
+
+# def rate_limit2(ip):
+#     current_time = time.time()
+#     if ip not in request_counts:
+#         request_counts[ip] = []
     
-    # Remove expired timestamps
-    request_counts[ip] = [t for t in request_counts[ip] if current_time - t < TIME_WINDOW]
+#     # Remove expired timestamps
+#     request_counts[ip] = [t for t in request_counts[ip] if current_time - t < TIME_WINDOW]
 
-    if len(request_counts[ip]) < RATE_LIMIT:
-        request_counts[ip].append(current_time)
-        return True
-    else:
-        return False
+#     if len(request_counts[ip]) < RATE_LIMIT:
+#         request_counts[ip].append(current_time)
+#         return True
+#     else:
+#         return False
     
 
 @app.route('/css/<path:filename>', methods=['GET'])
@@ -86,8 +95,8 @@ def add_nosniff_header(response):
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    ip = request.remote_addr  # Added this line
-    if not rate_limit(ip, "login"):  # Added rate limit check
+    ip = request.remote_addr  
+    if not rate_limit(ip, "login"):  
         return make_response("Too many requests, please try again later.", 429)
     
     # ip = request.remote_addr
